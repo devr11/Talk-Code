@@ -6,7 +6,7 @@ const app = express();
 
 const __dirname = path.resolve();
 
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({ msg: "success from api" });
 });
 

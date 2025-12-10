@@ -3,6 +3,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { ENV } from "./lib/env.js";
+import { connectDB } from "./lib/db.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,4 +29,5 @@ app.get("/health", (req, res) => {
 // IMPORTANT: use the port from env (Render sets PORT)
 app.listen(ENV.PORT, () => {
   console.log(`Server is running on port ${ENV.PORT}`);
+  connectDB()
 });

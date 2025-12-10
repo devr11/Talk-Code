@@ -26,8 +26,13 @@ app.get("/health", (req, res) => {
 //   });
 // }
 
-// IMPORTANT: use the port from env (Render sets PORT)
-app.listen(ENV.PORT, () => {
-  console.log(`Server is running on port ${ENV.PORT}`);
-  connectDB()
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.listen(ENV.PORT, () => {
+      console.log(`Server is running on port ${ENV.PORT}`);
+      connectDB();
+    });
+  } catch (error) {}
+};

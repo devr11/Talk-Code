@@ -32,7 +32,6 @@ const startServer = async () => {
 
     app.listen(ENV.PORT, () => {
       console.log(`Server is running on port ${ENV.PORT}`);
-      connectDB();
     });
   } catch (error) {}
 };

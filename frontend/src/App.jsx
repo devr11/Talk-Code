@@ -1,13 +1,24 @@
 import "./App.css";
-import { SignInButton } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
 function App() {
-
   return (
     <>
       <h1>Welcome to the App</h1>
 
-      <SignInButton />
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
     </>
   );
 }

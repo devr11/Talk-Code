@@ -25,7 +25,6 @@ function App() {
   return (
     <>
       <h1>Welcome to the App</h1>
-      // frontend/src/main.jsx (or App.jsx)
       <SignedOut>
         <SignInButton />
       </SignedOut>

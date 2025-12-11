@@ -6,21 +6,27 @@ import { ENV } from "./lib/env.js";
 import { connectDB } from "./lib/db.js";
 import cors from "cors";
 
-const allowedOrigin =
-  process.env.ALLOWED_ORIGIN || "https://talk-code.vercel.app";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const app = express();
 
 app.use(express.json());
+
+const allowedOrigin =
+  process.env.ALLOWED_ORIGIN || "https://talk-code.vercel.app";
+
 app.use(
   cors({
     origin: allowedOrigin,
     credentials: true,
   })
 );
+
+app.options("*", cors({
+  origin: allowedOrigin,
+  credentials: true
+}));
 
 // health check route
 app.get("/health", (req, res) => {

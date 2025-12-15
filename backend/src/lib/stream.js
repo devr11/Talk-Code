@@ -11,5 +11,10 @@ if(!apiKey || !secretKey){
 export const chatClient = StreamChat.getInstance(apiKey, secretKey)
 
 export const upsertStreamUser = async (userData) => {
-    
+    try {
+        await chatClient.upsertUser([userData])
+        return userData
+    } catch (error) {
+        console.error("Error upserting stream user:", error)
+    }
 }

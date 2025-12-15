@@ -9,3 +9,7 @@ if(!apiKey || !secretKey){
 }
 
 export const chatClient = StreamChat.getInstance(apiKey, secretKey)
+
+export const upsertStreamUser = async (userData) => {
+    
+}

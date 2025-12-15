@@ -36,11 +36,11 @@ app.use(
 // Optional: simpler (allows any origin) - use only for quick testing
 // app.use(cors()); // <-- not recommended for production if using cookies or secrets
 
-app.use("/api/inngest", serve({client:inngest, functions}))
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 // Simple health route
 app.get("/health", (req, res) => {
-  res.status(200).json({ msg: "success from api" });
+  res.status(200).json({ msg: "success from api - by Dev Rastogi" });
 });
 
 // -- Add your other API routes below --

@@ -4,6 +4,8 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import { ENV } from "./lib/env.js"; // keep this if you use your ENV wrapper
+import { serve } from "inngest/express";
+import { inngest } from "./lib/inngest.js";
 
 // Resolve __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -33,6 +35,8 @@ app.use(
 
 // Optional: simpler (allows any origin) - use only for quick testing
 // app.use(cors()); // <-- not recommended for production if using cookies or secrets
+
+app.use("/api/inngest", serve({client:inngest, functions}))
 
 // Simple health route
 app.get("/health", (req, res) => {

@@ -20,6 +20,8 @@ const syncUser = inngest.createFunction(
     }  
 
     await User.create(newUser)
+
+    //todo: do something else
   }
 );
 const deleteUserFromDB = inngest.createFunction(
@@ -35,4 +37,4 @@ const deleteUserFromDB = inngest.createFunction(
   }
 );
 
-export const functions = [syncUser]
+export const functions = [syncUser, deleteUserFromDB]

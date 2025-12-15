@@ -5,7 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { ENV } from "./lib/env.js"; // keep this if you use your ENV wrapper
 import { serve } from "inngest/express";
-import { inngest } from "./lib/inngest.js";
+import { inngest, functions } from "./lib/inngest.js";
 
 // Resolve __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);

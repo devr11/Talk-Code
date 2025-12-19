@@ -15,23 +15,29 @@ const app = express();
 app.use(express.json());
 
 // CORS: allow only your frontend origin (recommended)
-const allowedOrigin =
-  process.env.ALLOWED_ORIGIN || "https://talk-code-o76a.vercel.app/";
+const allowedOrigins = [
+  "https://talk-code-076a.vercel.app",
+  "https://talk-code.vercel.app",
+  "http://localhost:5173"
+];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // allow requests with no origin like curl / Postman
       if (!origin) return callback(null, true);
-      // allow if matches allowedOrigin
-      if (origin === allowedOrigin) return callback(null, true);
-      // otherwise block
-      return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(
+        new Error(`CORS blocked origin: ${origin}`)
+      );
     },
-    //credentials: true meaning ?=> server allows a browser to include cookies on request
     credentials: true,
   })
 );
+
 
 // Optional: simpler (allows any origin) - use only for quick testing
 // app.use(cors()); // <-- not recommended for production if using cookies or secrets

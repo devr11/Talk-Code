@@ -26,7 +26,7 @@ app.use(
       // allow if matches allowedOrigin
       if (origin === allowedOrigin) return callback(null, true);
       // otherwise block
-      return callback(new Error("Not allowed by CORS"));
+      return callback(null, true);
     },
     //credentials: true meaning ?=> server allows a browser to include cookies on request
     credentials: true,

@@ -16,7 +16,7 @@ app.use(express.json());
 
 // CORS: allow only your frontend origin (recommended)
 const allowedOrigin =
-  process.env.ALLOWED_ORIGIN || "https://talk-code.vercel.app";
+  process.env.ALLOWED_ORIGIN || "https://talk-code-o76a.vercel.app/";
 
 app.use(
   cors({

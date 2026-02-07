@@ -69,3 +69,5 @@ const port = ENV?.PORT || process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+// program to calculate simple interest

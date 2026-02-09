@@ -22,6 +22,7 @@ const allowedOrigins = [
   "http://localhost:5173",
 ];
 
+// credentials:true meaning??=> server allows a browser to inlcude cookies on req
 app.use(
   cors({
     origin: (origin, callback) => {

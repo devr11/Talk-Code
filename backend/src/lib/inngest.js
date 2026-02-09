@@ -3,6 +3,7 @@ import { connectDB } from "./db.js";
 import { Inngest } from "inngest";
 import { deleteStreamUser, upsertStreamUser } from "./stream.js";
 
+// Create a client to send and receive events
 export const inngest = new Inngest({ id: "talk-code" });
 
 const syncUser = inngest.createFunction(

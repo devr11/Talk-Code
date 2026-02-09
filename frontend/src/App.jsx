@@ -29,6 +29,7 @@ function App() {
         <SignInButton />
       </SignedOut>
       <SignedIn>
+        <SignOutButton/>
         <UserButton />
       </SignedIn>
     </>

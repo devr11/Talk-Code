@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { ENV } from "./lib/env.js"; // keep this if you use your ENV wrapper
 import { serve } from "inngest/express";
 import { inngest, functions } from "./lib/inngest.js";
+import { connectDB } from "./lib/db.js";
 
 // Resolve __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +19,7 @@ app.use(express.json());
 const allowedOrigins = [
   "https://talk-code-o76a.vercel.app",
   "https://talk-code.vercel.app",
-  "http://localhost:5173"
+  "http://localhost:5173",
 ];
 
 app.use(
@@ -30,14 +31,11 @@ app.use(
         return callback(null, true);
       }
 
-      return callback(
-        new Error(`CORS blocked origin: ${origin}`)
-      );
+      return callback(new Error(`CORS blocked origin: ${origin}`));
     },
     credentials: true,
-  })
+  }),
 );
-
 
 // Optional: simpler (allows any origin) - use only for quick testing
 // app.use(cors()); // <-- not recommended for production if using cookies or secrets
@@ -70,4 +68,16 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(ENV.PORT, () =>
+      console.log("Server is running on port:", ENV.PORT),
+    );
+  } catch (error) {
+    console.error("Error starting the server", error);
+  }
+};
+
+startServer();
 // program to calculate simple interest

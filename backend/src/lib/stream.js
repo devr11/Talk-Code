@@ -12,7 +12,7 @@ export const chatClient = StreamChat.getInstance(apiKey, secretKey);
 
 export const upsertStreamUser = async (userData) => {
   try {
-    await chatClient.upsertUsers([userData]);
+    await chatClient.upsertUser(userData);
     console.log("Stream user upsert successful:", userData);
   } catch (error) {
     console.error("Error upserting stream user:", error);
@@ -21,11 +21,11 @@ export const upsertStreamUser = async (userData) => {
 
 export const deleteStreamUser = async (userId) => {
   try {
-    await chatClient.deleteUser([userId]);
+    await chatClient.deleteUser(userId);
     console.log("Stream user deleted successful:", userId);
   } catch (error) {
     console.error("Error deleting stream user:", error);
   }
 };
 
-//Todo
+//Todo: add another method to generate token

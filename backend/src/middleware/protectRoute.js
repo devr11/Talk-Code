@@ -6,9 +6,21 @@ export const protectRoute = [
     async (req, res, next) => {
         try {
             const clerkId = req.auth().userId // here we got the id
-            if(!clerkId) return res.status(401).json({msg: "Unauthorized"})
+            if(!clerkId) return res.status(401).json({msg: "Unauthorized - invalid token"})
+
+            // find user in db by clerkId
+            const user = await User.findOne({clerkId})
+
+            if(!user) return res.status(404).json({msg:"User not found"})
+
+            req.user = user
+
+            next(
+
+            )
         } catch (error) {
-            
+            console.error("Error in protectRoute middleware", error)
+            res.status(500).json({msg: "Internal Server Error"})
         }
     }
 ]

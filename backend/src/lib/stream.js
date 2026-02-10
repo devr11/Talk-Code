@@ -28,4 +28,4 @@ export const deleteStreamUser = async (userId) => {
   }
 };
 
-//Todo: add another method to generate token
+//Todo: add another method to generate tokens

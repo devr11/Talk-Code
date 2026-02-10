@@ -7,6 +7,7 @@ import { ENV } from "./lib/env.js"; // keep this if you use your ENV wrapper
 import { serve } from "inngest/express";
 import { inngest, functions } from "./lib/inngest.js";
 import { connectDB } from "./lib/db.js";
+import { clerkMiddleware } from '@clerk/express'
 
 // Resolve __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -37,6 +38,7 @@ app.use(
     credentials: true,
   }),
 );
+app.use(clerkMiddleware()) // this adds auth field to request object: req.auth()
 
 // Optional: simpler (allows any origin) - use only for quick testing
 // app.use(cors()); // <-- not recommended for production if using cookies or secrets
@@ -47,6 +49,10 @@ app.use("/api/inngest", serve({ client: inngest, functions }));
 app.get("/health", (req, res) => {
   res.status(200).json({ msg: "success from api - by Dev Rastogi" });
 });
+app.get("/video-calls", protectRoute, (req, res) => {
+  res.status(200).json({ msg: "success from api - by Dev Rastogi" });
+});
+
 
 // -- Add your other API routes below --
 // e.g. app.use("/api/users", usersRouter);

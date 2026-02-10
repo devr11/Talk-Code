@@ -13,6 +13,7 @@ export const protectRoute = [
 
             if(!user) return res.status(404).json({msg:"User not found"})
 
+            // attach user to req
             req.user = user
 
             next(

@@ -7,7 +7,7 @@ import { ENV } from "./lib/env.js"; // keep this if you use your ENV wrapper
 import { serve } from "inngest/express";
 import { inngest, functions } from "./lib/inngest.js";
 import { connectDB } from "./lib/db.js";
-import { clerkMiddleware } from '@clerk/express'
+import { clerkMiddleware } from "@clerk/express";
 import { protectRoute } from "./middleware/protectRoute.js";
 
 // Resolve __dirname in ESM
@@ -39,7 +39,7 @@ app.use(
     credentials: true,
   }),
 );
-app.use(clerkMiddleware()) // this adds auth field to request object: req.auth()
+app.use(clerkMiddleware()); // this adds auth field to request object: req.auth()
 
 // Optional: simpler (allows any origin) - use only for quick testing
 // app.use(cors()); // <-- not recommended for production if using cookies or secrets
@@ -55,7 +55,6 @@ app.get("/health", (req, res) => {
 app.get("/video-calls", protectRoute, (req, res) => {
   res.status(200).json({ msg: "this is a protected route" });
 });
-
 
 // -- Add your other API routes below --
 // e.g. app.use("/api/users", usersRouter);

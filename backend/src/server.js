@@ -8,7 +8,7 @@ import { serve } from "inngest/express";
 import { inngest, functions } from "./lib/inngest.js";
 import { connectDB } from "./lib/db.js";
 import { clerkMiddleware } from "@clerk/express";
-import { protectRoute } from "./middleware/protectRoute.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 // Resolve __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -45,15 +45,12 @@ app.use(clerkMiddleware()); // this adds auth field to request object: req.auth(
 // app.use(cors()); // <-- not recommended for production if using cookies or secrets
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
+app.use("/api/chat", chatRoutes)
 
 // Simple health route
 app.get("/health", (req, res) => {
-  res.status(200).json({ msg: "success from api - by Dev Rastogi" });
-});
-
-// when you pass an array of middleware to express, it automatically flattens and executes them sequentially, one by one
-app.get("/video-calls", protectRoute, (req, res) => {
-  res.status(200).json({ msg: "this is a protected route" });
+  res.status(200)
+  .json({ msg: "success from api - by Dev Rastogi" });
 });
 
 // -- Add your other API routes below --

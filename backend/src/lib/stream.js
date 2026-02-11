@@ -8,7 +8,7 @@ if (!apiKey || !secretKey) {
   console.error("Stream API_KEY or SECRET is missing");
 }
 
-export const chatClient = StreamChat.getInstance(apiKey, secretKey);
+export const chatClient = StreamChat.getInstance(apiKey, secretKey); // this is for chat features
 
 export const upsertStreamUser = async (userData) => {
   try {
@@ -27,5 +27,3 @@ export const deleteStreamUser = async (userId) => {
     console.error("Error deleting stream user:", error);
   }
 };
-
-//Todo: add another method to generate tokens

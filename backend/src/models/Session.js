@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const sessionSchema = mongoose.Schema(
   {
@@ -35,6 +35,6 @@ const sessionSchema = mongoose.Schema(
   { timestamps: true },
 );
 
-const session = mongoose.model("Session", sessionSchema);
+const Session = mongoose.model("Session", sessionSchema);
 
 export default Session;

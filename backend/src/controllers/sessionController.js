@@ -41,16 +41,24 @@ export async function createSession(req, res) {
 
     await channel.create();
     res.status(200).json({ session });
+
   } catch (error) {
     console.error("Error in createSession controller:", error.msg);
     res.status(500).json({ msg: "Internal Server Error" });
   }
 }
 
-export async function getActiveSessions(req, res) {
+export async function getActiveSessions(_, res) {
   try {
     const sessions = await Session.find({status:"active"})
-  } catch (error) {}
+    .populate("host", "name profileImage email clerkId")
+    .sort({createdAt: -1})
+    .limit(20)
+
+    res.status(200).json({sessions})
+  } catch (error) {
+    res.status(500).json({ msg: "Internal Server Error" });
+  }
 }
 
 export async function getMyRecentSessions(req, res) {}

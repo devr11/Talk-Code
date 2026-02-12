@@ -81,16 +81,15 @@ export async function getMyRecentSessions(req, res) {
 
 export async function getSessionById(req, res) {
   try {
-    const {id} = req.params
+    const { id } = req.params;
 
     const session = await Session.findById(id)
-    .populate("host", "name profileImage email clerkId")
-    .populate("participant", "name profileImage email clerkId")
+      .populate("host", "name profileImage email clerkId")
+      .populate("participant", "name profileImage email clerkId");
 
-    if(!session) return res.status(404).json({msg:"Session not found"})
+    if (!session) return res.status(404).json({ msg: "Session not found" });
 
-    res.status(200) .json({session})
-
+    res.status(200).json({ session });
   } catch (error) {
     console.error("Error in getSessionById controller:", error.msg);
     res.status(500).json({ msg: "Internal Server Error" });
@@ -99,25 +98,25 @@ export async function getSessionById(req, res) {
 
 export async function joinSession(req, res) {
   try {
-    const {id} = req.params
-    const userId = req.user._id
-    const clerkId = req.user.clerkId
+    const { id } = req.params;
+    const userId = req.user._id;
+    const clerkId = req.user.clerkId;
 
-    const session = await Session.findById(id)
+    const session = await Session.findById(id);
 
-    if(!session) return res.status(404).json({msg:"Session not found"})
+    if (!session) return res.status(404).json({ msg: "Session not found" });
 
     // check if session is already full - has a participant
-    if(session.participant) return res.status(404).json({msg: "Session is full"})
+    if (session.participant)
+      return res.status(404).json({ msg: "Session is full" });
 
-    session.participant = userId
-    await session.save()
+    session.participant = userId;
+    await session.save();
 
-    const channel = chatClient.channel("messaging", session.callId)
-    await channel.addMembers([clerkId])
+    const channel = chatClient.channel("messaging", session.callId);
+    await channel.addMembers([clerkId]);
 
-    res.status(200).json({session})
-
+    res.status(200).json({ session });
   } catch (error) {
     console.error("Error in joinSession controller:", error.msg);
     res.status(500).json({ msg: "Internal Server Error" });
@@ -126,37 +125,34 @@ export async function joinSession(req, res) {
 
 export async function endSession(req, res) {
   try {
-    const {id} = req.params
-    const userId = req.user._id
+    const { id } = req.params;
+    const userId = req.user._id;
 
-    const session = await Session.findById(id)
+    const session = await Session.findById(id);
 
-    if(!session) return res.status(404).json({msg:"Session not found"})
+    if (!session) return res.status(404).json({ msg: "Session not found" });
 
     // check if user is the host
-    if(session.host.toString() !== userId.toString()){
-      return res.status(403).json({msg:"Only the host can end the session"})
+    if (session.host.toString() !== userId.toString()) {
+      return res.status(403).json({ msg: "Only the host can end the session" });
     }
 
     // check if session is already completed
-    if(session.status === "completed"){
-      return res.status(400).json({msg: "Session is already completed"})
+    if (session.status === "completed") {
+      return res.status(400).json({ msg: "Session is already completed" });
     }
 
-    session.status = "completed"
-    await session.save()
+    session.status = "completed";
+    await session.save();
 
     // delete stream video call
-    const call = streamClient.video.call("default", session.callId)
-    await call.delete({hard:true})
+    const call = streamClient.video.call("default", session.callId);
+    await call.delete({ hard: true });
 
     // delete stream chat channel
-    const channel = chatClient.channel("messaging", session.callId)
-    await channel.delete()
+    const channel = chatClient.channel("messaging", session.callId);
+    await channel.delete();
 
-    res.status(200).json({session, msg: "Session ended successfully"})
-
-  } catch (error) {
-    
-  }
+    res.status(200).json({ session, msg: "Session ended successfully" });
+  } catch (error) {}
 }

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   SignedIn,
   SignedOut,
@@ -6,32 +5,18 @@ import {
   SignOutButton,
   UserButton,
 } from "@clerk/clerk-react";
-import { healthCheck } from "./api";
+import { Route, Routes } from "react-router";
 
 function App() {
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await healthCheck();
-        console.log("Backend health:", data);
-      } catch (err) {
-        console.error("Health check error:", err);
-      }
-    })();
-  }, []);
-
+ 
   console.log("VITE_API_URL:", import.meta.env.VITE_API_URL);
   return (
-    <>
+    <Routes>
       <h1 className="text-7xl">Welcome to the App</h1>
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-      <SignedIn>
-        <SignOutButton />
-        <UserButton />
-      </SignedIn>
-    </>
+      
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+    </Routes>
   );
 }
 

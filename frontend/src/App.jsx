@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import "./App.css";
 import {
   SignedIn,
   SignedOut,
@@ -24,7 +23,7 @@ function App() {
   console.log("VITE_API_URL:", import.meta.env.VITE_API_URL);
   return (
     <>
-      <h1>Welcome to the App</h1>
+      <h1 className="text-7xl">Welcome to the App</h1>
       <SignedOut>
         <SignInButton />
       </SignedOut>

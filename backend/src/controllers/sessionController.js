@@ -97,6 +97,55 @@ export async function getSessionById(req, res) {
   }
 }
 
-export async function joinSession(req, res) {}
+export async function joinSession(req, res) {
+  try {
+    const {id} = req.params
+    const userId = req.user._id
+    const clerkId = req.user.clerkId
 
-export async function endSession(req, res) {}
+    const session = await Session.findById(id)
+
+    if(!session) return res.status(404).json({msg:"Session not found"})
+
+    // check if session is already full - has a participant
+    if(session.participant) return res.status(404).json({msg: "Session is full"})
+
+    session.participant = userId
+    await session.save()
+
+    const channel = chatClient.channel("messaging", session.callId)
+    await channel.addMembers([clerkId])
+
+    res.status(200).json({session})
+
+  } catch (error) {
+    console.error("Error in joinSession controller:", error.msg);
+    res.status(500).json({ msg: "Internal Server Error" });
+  }
+}
+
+export async function endSession(req, res) {
+  try {
+    const {id} = req.params
+    const userId = req.user._id
+
+    const session = await Session.findById(id)
+
+    if(!session) return res.status(404).json({msg:"Session not found"})
+
+    // check if user is the host
+    if(session.host.toString() !== userId.toString()){
+      return res.status(403).json({msg:"Only the host can end the session"})
+    }
+
+    // check if session is already completed
+    if(session.status === "completed"){
+      return res.status(400).json({msg: "Session is already completed"})
+    }
+
+    session.status = "completed"
+
+  } catch (error) {
+    
+  }
+}

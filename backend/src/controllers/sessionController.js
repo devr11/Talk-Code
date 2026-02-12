@@ -41,7 +41,6 @@ export async function createSession(req, res) {
 
     await channel.create();
     res.status(200).json({ session });
-
   } catch (error) {
     console.error("Error in createSession controller:", error.msg);
     res.status(500).json({ msg: "Internal Server Error" });
@@ -50,18 +49,35 @@ export async function createSession(req, res) {
 
 export async function getActiveSessions(_, res) {
   try {
-    const sessions = await Session.find({status:"active"})
-    .populate("host", "name profileImage email clerkId")
-    .sort({createdAt: -1})
-    .limit(20)
+    const sessions = await Session.find({ status: "active" })
+      .populate("host", "name profileImage email clerkId")
+      .sort({ createdAt: -1 })
+      .limit(20); // latest 20 sessions
 
-    res.status(200).json({sessions})
+    res.status(200).json({ sessions });
   } catch (error) {
+    console.error("Error in getActiveSessions controller:", error.msg);
     res.status(500).json({ msg: "Internal Server Error" });
   }
 }
 
-export async function getMyRecentSessions(req, res) {}
+export async function getMyRecentSessions(req, res) {
+  try {
+    const userId = req.user._id;
+    // get sessions where host is either host or participant
+    const sessions = await Session.find({
+      status: "completed",
+      $or: [{ host: userId }, { participant: userId }],
+    })
+      .sort({ createdAt: -1 })
+      .limit(20);
+
+    res.status(200).json({ sessions });
+  } catch (error) {
+    console.error("Error in getMyRecentSessions controller:", error.msg);
+    res.status(500).json({ msg: "Internal Server Error" });
+  }
+}
 
 export async function getSessionById(req, res) {}
 

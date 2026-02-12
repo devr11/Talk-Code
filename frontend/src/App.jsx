@@ -1,21 +1,18 @@
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignOutButton,
-  UserButton,
-} from "@clerk/clerk-react";
-import { Route, Routes } from "react-router";
+import { useUser } from "@clerk/clerk-react";
+import { Navigate, Route, Routes } from "react-router";
+import HomePage from "./pages/HomePage";
+import ProblemsPage from "./pages/ProblemsPage";
 
 function App() {
- 
-  console.log("VITE_API_URL:", import.meta.env.VITE_API_URL);
+  const { isSignedIn } = useUser();
+
   return (
     <Routes>
-      <h1 className="text-7xl">Welcome to the App</h1>
-      
       <Route path="/" element={<HomePage />} />
-      <Route path="/about" element={<AboutPage />} />
+      <Route
+        path="/problems"
+        element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />}
+      />
     </Routes>
   );
 }

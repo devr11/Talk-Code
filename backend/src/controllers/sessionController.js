@@ -79,7 +79,23 @@ export async function getMyRecentSessions(req, res) {
   }
 }
 
-export async function getSessionById(req, res) {}
+export async function getSessionById(req, res) {
+  try {
+    const {id} = req.params
+
+    const session = await Session.findById(id)
+    .populate("host", "name profileImage email clerkId")
+    .populate("participant", "name profileImage email clerkId")
+
+    if(!session) return res.status(404).json({msg:"Session not found"})
+
+    res.status(200) .json({session})
+
+  } catch (error) {
+    console.error("Error in getSessionById controller:", error.msg);
+    res.status(500).json({ msg: "Internal Server Error" });
+  }
+}
 
 export async function joinSession(req, res) {}
 

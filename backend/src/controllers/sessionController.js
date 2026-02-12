@@ -154,5 +154,9 @@ export async function endSession(req, res) {
     await channel.delete();
 
     res.status(200).json({ session, msg: "Session ended successfully" });
-  } catch (error) {}
+
+  } catch (error) {
+    console.error("Error in endSession controller:", error.msg);
+    res.status(500).json({ msg: "Internal Server Error" });
+  }
 }

@@ -1,37 +1,40 @@
 import mongoose, { mongo } from "mongoose";
 
-const sessionSchema = mongoose.Schema({
+const sessionSchema = mongoose.Schema(
+  {
     problem: {
-        type: String,
-        required: true 
+      type: String,
+      required: true,
     },
     difficulty: {
-        type: String,
-        enum: ["easy", "medium", "hard"],
-        required: true 
+      type: String,
+      enum: ["easy", "medium", "hard"],
+      required: true,
     },
     host: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     participant: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: null
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
     },
     status: {
-        type: String,
-        emun: ["active", "completed"],
-        default: "active"
+      type: String,
+      emun: ["active", "completed"],
+      default: "active",
     },
     // stream video call ID
     callId: {
-        type: String,
-        default: ""
-    }
-}, {timestamps: true})
+      type: String,
+      default: "",
+    },
+  },
+  { timestamps: true },
+);
 
-const session = mongoose.model("Session", sessionSchema)
+const session = mongoose.model("Session", sessionSchema);
 
-export default Session
+export default Session;

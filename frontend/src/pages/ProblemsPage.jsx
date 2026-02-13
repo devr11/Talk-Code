@@ -1,6 +1,10 @@
+import Navbar from "../components/Navbar"
+
 function ProblemsPage() {
   return (
-    <div>ProblemsPage</div>
+    <div className="">
+      <Navbar />
+    </div>
   )
 }
 

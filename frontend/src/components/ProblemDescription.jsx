@@ -35,6 +35,7 @@ function ProblemDescription({ problem, currentProblemId, onProblemChange, allPro
 
           <div className="space-y-3 text-base leading-relaxed">
             <p className="text-base-content/90">{problem.description.text}</p>
+            {/* <p className="text-base-content/90">{problem.description.notes}</p> */}
             {problem.description.notes.map((note, idx) => (
               <p key={idx} className="text-base-content/90">
                 {note}
@@ -55,11 +56,11 @@ function ProblemDescription({ problem, currentProblemId, onProblemChange, allPro
                 </div>
                 <div className="bg-base-200 rounded-lg p-4 font-mono text-sm space-y-1.5">
                   <div className="flex gap-2">
-                    <span className="text-primary font-bold min-w-[70px]">Input:</span>
+                    <span className="text-primary font-bold min-w-17.5">Input:</span>
                     <span>{example.input}</span>
                   </div>
                   <div className="flex gap-2">
-                    <span className="text-secondary font-bold min-w-[70px]">Output:</span>
+                    <span className="text-secondary font-bold min-w-17.5">Output:</span>
                     <span>{example.output}</span>
                   </div>
                   {example.explanation && (

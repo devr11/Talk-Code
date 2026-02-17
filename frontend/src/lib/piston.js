@@ -43,36 +43,35 @@ export async function executeCode(language, code) {
       }),
     });
 
-    if(!response) {
-        return {
-            success: false,
-            error: `HTTP error! status: ${response.status}`
-        }
+    if (!response) {
+      return {
+        success: false,
+        error: `HTTP error! status: ${response.status}`,
+      };
     }
 
-    const data = await response.json()
+    const data = await response.json();
 
-    const output =  data.run.output || ""
-    const stderr = data.run.stderr || ""
+    const output = data.run.output || "";
+    const stderr = data.run.stderr || "";
 
-    if(stderr){
-        return {
-            success: false,
-            output: output,
-            error: stderr
-        }
+    if (stderr) {
+      return {
+        success: false,
+        output: output,
+        error: stderr,
+      };
     }
 
     return {
-        success: true,
-        output: output || "No output"
-    }
-
+      success: true,
+      output: output || "No output",
+    };
   } catch (error) {
     return {
-        success: false,
-        error: `Failed to execute code: ${error.msg}`
-    }
+      success: false,
+      error: `Failed to execute code: ${error.msg}`,
+    };
   }
 }
 

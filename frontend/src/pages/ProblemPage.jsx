@@ -6,6 +6,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import ProblemDescription from "../components/ProblemDescription";
 import CodeEditorPanel from "../components/CodeEditorPanel";
 import OutputPanel from "../components/OutputPanel";
+import { executeCode } from "../lib/piston";
 
 function ProblemPage() {
   const { id } = useParams();
@@ -30,15 +31,26 @@ function ProblemPage() {
     }
   }, [id, selectedLanguage]);
 
-  const handelLanguageChange = (e) => {};
+  const handleLanguageChange = (e) => {
+    const newLang = e.target.value;
+    setSelectedLanguage(newLang);
+    setCode(currentProblem.starterCode[newLang]);
+    setOutput(null);
+  };
 
-  const handleProblemChange = (newProblemId) => navigate(`/problem/${newProblemId}`);
+  const handleProblemChange = (newProblemId) =>
+    navigate(`/problem/${newProblemId}`);
 
   const triggerConfetti = () => {};
 
   const checkIfTestPasses = () => {};
 
-  const handleRunCode = () => {};
+  const handleRunCode = async () => {
+    setIsRunning(true)
+    setOutput(null)
+     
+    const result = await executeCode(selectedLanguage, code)
+  };
 
   return (
     <div className="h-screen bg-base-100 flex flex-col">

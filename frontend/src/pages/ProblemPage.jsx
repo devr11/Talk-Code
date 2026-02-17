@@ -32,7 +32,7 @@ function ProblemPage() {
 
   const handelLanguageChange = (e) => {};
 
-  const handleProblemChange = () => {};
+  const handleProblemChange = (newProblemId) => navigate(`/problem/${newProblemId}`);
 
   const triggerConfetti = () => {};
 
@@ -41,7 +41,7 @@ function ProblemPage() {
   const handleRunCode = () => {};
 
   return (
-    <div className="h-screen w-screen bg-base-100 flex flex-col">
+    <div className="h-screen bg-base-100 flex flex-col">
       <Navbar />
 
       <div className="flex-1">
@@ -67,7 +67,7 @@ function ProblemPage() {
                   selectedLanguage={selectedLanguage}
                   code={code}
                   isRunning={isRunning}
-                  // onLanguageChange={handleLanguageChange}
+                  onLanguageChange={handleLanguageChange}
                   onCodeChange={setCode}
                   onRunCode={handleRunCode}
                 />

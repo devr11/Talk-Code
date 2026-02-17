@@ -50,6 +50,13 @@ function ProblemPage() {
     setOutput(null)
      
     const result = await executeCode(selectedLanguage, code)
+    setOutput(result)
+    setIsRunning(false)
+
+    // check if code executed successfully and matches expected output
+    if(result.success){
+      const expectedOutput = currentProblem.expectedOutput[selectedLanguage]
+    }
   };
 
   return (

@@ -43,7 +43,7 @@ export async function executeCode(language, code) {
       }),
     });
 
-    if (!response) {
+    if (!response.ok) {
       return {
         success: false,
         error: `HTTP error! status: ${response.status}`,

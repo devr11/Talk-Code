@@ -23,6 +23,7 @@ const allowedOrigins = [
   "https://talk-code-o76a.vercel.app",
   "https://talk-code.vercel.app",
   "http://localhost:5173",
+  "https://talk-code.onrender.com/sessions"
 ];
 
 // credentials:true meaning??=> server allows a browser to inlcude cookies on req
@@ -68,23 +69,16 @@ if (ENV.NODE_ENV === "production") {
 }
 */
 
-// Start server: prefer ENV.PORT (from your env wrapper), then process.env.PORT, then 8000
-const port = ENV?.PORT || process.env.PORT || 8000;
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
-
+// Start server
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(ENV.PORT, () =>
-      console.log("Server is running on port:", ENV.PORT),
-    );
+    const port = ENV?.PORT || process.env.PORT || 8000;
+    app.listen(port, () => console.log("Server is running on port:", port));
   } catch (error) {
     console.error("Error starting the server", error);
+    process.exit(1);
   }
 };
 
 startServer();
-// program to calculate simple interest

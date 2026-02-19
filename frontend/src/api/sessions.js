@@ -4,7 +4,7 @@ export const sessionApi = {
   createSession: async (data) => {
     const response = await axiosInstance.post("/sessions", data);
     return response.data;
-  },
+  }, 
 
   getActiveSessions: async () => {
     const response = await axiosInstance.get("/sessions/active");
